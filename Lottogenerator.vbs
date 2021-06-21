@@ -14,26 +14,16 @@ if anzahlReihen > 12 Then
 End If
 
 dim i, j, ausgabe
-dim zahlen(5)
+dim zahlen '(5)
 
 For i=0 To anzahlReihen-1
-
-    For j=0 To UBound(zahlen)
-        dim zahl
-        Do
-            zahl = int(rnd() * 49) + 1
-        Loop While IsInArray(zahl, zahlen)
-        zahlen(i) = zahl
-        ausgabe = ausgabe & zahlen(i) & ", "
-    Next
-
-    ausgabe = ausgabe & vbCrLf
-
+    zahlen = ErstelleLottoreihe ' Erstellt ein Array mit 6 Zahlen zwischen 1 und 49 (nicht wiederholend)
+    ausgabe = ausgabe & vbCrLf & KommaString(zahlen) ' Erzeugt aus den Elementen des gg. Arrays eine komma-getrennte Zeichenkette
 Next
 
 MsgBox(ausgabe)
 
-Function IsInArray(element, array)
+Function IsInArray(byval element, byval array)
     dim k
     For k=0 To ubound(array)
         If array(k)=element Then
@@ -44,3 +34,29 @@ Function IsInArray(element, array)
 
     IsInArray = False
 End Function 
+
+' Erstellt ein Array mit 6 Zahlen zwischen 1 und 49 (nicht wiederholend)
+Function ErstelleLottoreihe()
+
+    dim array(5), l, zahl
+    For l=0 To Ubound(array)
+        Do
+            zahl = Int(rnd()*49)+1
+        Loop While IsInArray(zahl, array)
+
+        array(l)=zahl
+    Next
+
+    ErstelleLottoreihe = array
+End Function
+
+' Erzeugt aus den Elementen des gg. Arrays eine komma-getrennte Zeichenkette
+Function KommaString(byval array) 
+    dim m, ergebnis
+
+    For m=0 To ubound(array)
+        ergebnis = ergebnis & array(m) & ", "
+    Next
+
+    KommaString = ergebnis
+End Function
