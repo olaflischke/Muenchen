@@ -20,6 +20,7 @@ For Each fld In root.SubFolders    ' Für jeden Unterordner des Stammverzeichnis
 
     'Ausgabe der Folder-Größe
     WScript.Echo fld.Path & ": " & size
+
 Next 
 
 ' Fehlerbehandlung abschalten

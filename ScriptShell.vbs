@@ -12,3 +12,4 @@ dim variable
 For Each variable In shell.Environment
     WScript.Echo variable
 Next ' variable
+

@@ -1,4 +1,8 @@
 Option Explicit
+dim ziel, betrag
+' Benutzereingaben
+ziel = InputBox("Welche Währung?")
+betrag = InputBox ("Betrag (Fremdwährung)?")
 
 dim xmlFile
 xmlFile = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
@@ -15,6 +19,7 @@ dim cubeNodes
 set cubeNodes = root.GetElementsByTagName("Cube")   ' Alle Tags, die "Cube" heißen
 
 If cubeNodes.Length > 0 Then
+    dim waehrungen, raten, i
     dim node
     For Each node In cubeNodes
         dim rate, iso
@@ -22,7 +27,15 @@ If cubeNodes.Length > 0 Then
         iso = node.GetAttribute("currency")
 
         if iso <> "" AND rate <> "" then 
-            WScript.Echo iso & ": " & rate        
+            'WScript.Echo iso & ": " & rate        
+            ' waehrungen(i) = iso
+            ' raten(i) = rate
+            if iso = ziel then
+                dim ergebnis
+                ergebnis = betrag / rate
+                MsgBox(betrag & " " & ziel & " sind " & FormatNumber(ergebnis, 2) & " EUR")
+                exit For
+            End if
         end If 
     Next
 End If
